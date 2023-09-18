@@ -3,9 +3,13 @@ import './style.css';
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <div>
-    <h1>Websocket - Client</h1>
-    <span id="server-status"></span>
+    <h2>Websocket - Client</h2>
 
+    <input id="jwtToken" placeholder="JSON Web Token"/>
+    <button id="connect-button">Connect</button>
+    
+    <br />
+    <span id="server-status"></span>
     <ul id="clients-list"></ul>
 
     <form id="message-form">
@@ -17,4 +21,12 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   </div>
 `;
 
-connectToServer();
+const inputJwt = document.querySelector<HTMLInputElement>('#jwtToken')!;
+const connectButton = document.querySelector<HTMLButtonElement>('#connect-button')!;
+
+connectButton.addEventListener('click', () => {
+	const token = inputJwt.value.trim();
+	if (token.length <= 0) return alert('Please enter a valid JSON Web Token');
+
+	connectToServer(token);
+});
